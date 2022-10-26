@@ -1,4 +1,7 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿/*
+ * !!!RUN IN RELEASE CONFIGURATION!!!
+ */
+using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using System;
 
@@ -8,18 +11,20 @@ namespace StructureDemoBenchmark
     {
         static void Main()
         {
+            //Run a benchmark using the MyBenchmark class.
+            //All methods with a benchmark annotation will be ran.
             BenchmarkRunner.Run<MyBenchmark>();
         }
     }
 
+    //We care about memory, so we use the MemoryDiagnoser annotation.
     [MemoryDiagnoser]
     public class MyBenchmark
     {
         private static String DateAsText { get; } = "10 26 2022";
 
         [Benchmark]
-        //Tuple type return
-        public (int month, int day, int year) DateWithSubstring()
+        public (int month, int day, int year) DateWithSubstring()//Can not be static
         {
             String monthAsText = DateAsText.Substring(0, 2);
             String dayAsText = DateAsText.Substring(3, 2);
@@ -31,7 +36,7 @@ namespace StructureDemoBenchmark
         }
 
         [Benchmark]
-        public (int month, int day, int year) DateWithSpan()
+        public (int month, int day, int year) DateWithSpan()//Can not be static
         {
             ReadOnlySpan<char> dateAsSpan = DateAsText;
             ReadOnlySpan<char> monthAsText = dateAsSpan.Slice(0, 2);

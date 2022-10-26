@@ -14,6 +14,7 @@ namespace StructureDemo
             Console.WriteLine(date);
         }
 
+        //Tuple type return
         public static (int month, int day, int year) DateWithSubstring()
         {
             String monthAsText = DateAsText.Substring(0, 2);
@@ -25,6 +26,7 @@ namespace StructureDemo
             return (month, day, year);
         }
 
+        //Tuple type return
         public static (int month, int day, int year) DateWithSpan()
         {
             ReadOnlySpan<Char> dateAsSpan = DateAsText;
